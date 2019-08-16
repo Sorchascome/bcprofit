@@ -1,0 +1,310 @@
+.MidSection {
+    width: 100%;
+    display: flex;
+    background: #ffffff;
+    flex-direction: column;
+    font-family: 'Montserrat', sans-serif;
+
+    & .innersection {
+        display: flex;
+        flex-direction: column;
+        border-bottom: 1px solid rgb(240, 240, 240);
+
+        .content {
+            width: 65%;
+            margin: 3vw auto;
+            text-align: center;
+
+            @media (max-width: 1200px) {
+                width: 80%;
+            }
+    
+            @media (max-width: 768px) {
+                margin: 6vw auto;
+                width: 90%;
+            }
+
+            .title {
+                color: #d65000;
+                font-weight: 700;
+                font-size: 2.86vw;
+
+                @media (max-width: 1200px) {
+                    font-size: 3vw;
+                }
+        
+                @media (max-width: 768px) {
+                    font-size: 8.86vw;
+                }
+            }
+
+            .subtitle {
+                width: 40%;
+                margin: 1.62vw auto;
+                font-weight: 400;
+                font-size: 1.4vw;
+
+                @media (max-width: 1200px) {
+                    font-size: 2vw;
+                }
+        
+                @media (max-width: 768px) {
+                    width: 80%;
+                    font-size: 4.86vw;
+                    margin: 3vw auto;
+                    margin-bottom: 8vw;
+                }
+
+                &.next {
+                    width: 58%;
+
+                    @media (max-width: 768px) {
+                        width: 90%;
+                    }
+                }
+            }
+        }
+
+        .rows {
+            display: flex;
+            flex-direction: column;
+
+            & .top, .bottom {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-evenly;
+
+                @media (max-width: 768px) {
+                    margin: auto;
+                    flex-direction: column;
+                }
+
+                & .item {
+                    display: flex;
+                    flex-direction: row;
+                    height: 13vw;
+                    max-width: 30%;
+                    justify-content: space-between;
+
+                    @media (max-width: 1200px) {
+                        height: 18vw;
+                    }
+            
+                    @media (max-width: 768px) {
+                        max-width: 100%;
+                        height: auto;
+                        justify-content: space-between;
+                        margin: 2vw auto;
+                        flex-direction: column;
+                    }
+
+                    & .column {
+                        display: flex;
+                        flex-direction: column;
+                        max-width: 75%;
+                        text-align: left;
+                        
+                
+                        @media (max-width: 768px) {
+                            max-width: 90%;
+                            margin: auto;
+                        }
+    
+                        & .qindex {
+                            text-align: center;
+                            width: 3.4vw;
+                            height: 3.4vw;
+                            line-height: 2.4;
+                            border-radius: 50%;
+                            font-weight: 700;
+                            color: #fff;
+                            font-size: 1.42vw;
+                            background-color: #2ba6df;
+
+                            @media (max-width: 1200px) {
+                                width: 4.4vw;
+                                height: 4.4vw;
+                                font-size: 1.92vw;
+                            }
+                    
+                            @media (max-width: 768px) {
+                                width: 16.4vw;
+                                height: 16.4vw;
+                                font-size: 6.84vw;
+                            }
+                        }
+
+                        
+                        & .aindex {
+                            text-align: center;
+                            margin: 0.4vw 0;
+                            width: 3.4vw;
+                            height: 2.3vw;
+                            line-height: 1.7;
+                            border-radius: 8%;
+                            font-weight: 700;
+                            font-size: 1.42vw;
+                            background: #ededed;
+                            color: #333;
+
+                            @media (max-width: 1200px) {
+                                width: 4.4vw;
+                                height: 3.2vw;
+                                font-size: 1.92vw;
+                            }
+                    
+                            @media (max-width: 768px) {
+                                width: 16.4vw;
+                                height: 11.4vw;
+                                font-size: 6.84vw;
+                                margin: 22vw 0;
+                                margin-top: 18vw;
+                            }
+                        }
+
+                        & .q {
+                            font-weight: 500;
+                            font-size: 1.04vw;
+                            height: 3.4vw;
+                            display: flex;
+                            margin-bottom: 0.4vw;
+
+                            @media (max-width: 1200px) {
+                                font-size: 1.44vw;
+                            }
+                    
+                            @media (max-width: 768px) {
+                                font-size: 5.04vw;
+                                text-align: left;
+                                height: 10.4vw;
+                                line-height: 1;
+                                margin: 0 auto;
+                                margin-top: -48vw;
+                                margin-bottom: 18vw;
+                                text-align: center;
+                            }
+
+                            & span {
+                                margin: auto 0;
+                            }
+                        }
+
+                        & .a {
+                            font-weight: 400;
+                            font-size: 0.82vw;
+                            height: 3.4vw;
+                            text-align: justify;
+
+                            @media (max-width: 1200px) {
+                                font-size: 1.2vw;
+                                height: 6.4vw;
+                            }
+                    
+                            @media (max-width: 768px) {
+                                font-size: 4.2vw;
+                                height: auto;
+                                margin: 4vw 0;
+                            }
+                        }
+                    }
+                }
+
+                & .rich {
+                    width: 50%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    margin: 1.4vw 0;
+            
+                    @media (max-width: 768px) {
+                        width: 80%;
+                        flex-direction: column;
+                        margin: 4vw auto;
+                        border-bottom: 1px solid rgb(240, 240, 240);
+                    }
+
+                    & .column {
+                        display: flex;
+                        flex-direction: column;
+                        max-width: 75%;
+                        text-align: left;
+
+                        @media (max-width: 768px) {
+                            max-width: 100%;
+                            text-align: center;
+                        }
+
+                        & img {
+                            width: 9vw;
+                            height: 9vw;
+                            border-radius: 50%;
+
+                            @media (max-width: 1200px) {
+                                width: 12vw;
+                                height: 12vw;
+                            }
+
+                            @media (max-width: 768px) {
+                                width: 30vw;
+                                height: 30vw;
+                                margin: 0 auto;
+                            }
+                        }
+
+                        & .name {
+                            margin: 3vw 0 2vw 0;
+                            font-size: 1.2vw;
+                            padding: 0.72vw 1vw;
+                            margin-left: -2vw;
+                            background: #fff;
+                            color: #f9b256;
+                            border-radius: 6px;
+
+                            @media (max-width: 1200px) {
+                                margin: 4vw 0 2vw 0;
+                                font-size: 1.8vw;
+                                padding: 0.72vw 1vw;
+                                margin-left: -3vw;
+                            }
+
+                            @media (max-width: 768px) {
+                                margin: -2vw auto;
+                                font-size: 6.2vw;
+                                padding: 0.72vw 1vw;
+                            }
+                        }
+
+                        & .text {
+                            font-style: italic;
+                            font-size: 1.04vw;
+                            padding-left: 0.8vw;
+                            font-family: 'Open Sans', sans-serif; 
+                        
+                            @media (max-width: 1200px) {
+                                font-size: 1.24vw;
+                            }
+
+                            @media (max-width: 768px) {
+                                margin: 4vw auto;
+                                font-size: 4.2vw;
+                            }
+                        }
+                    }
+                }
+            }
+
+            & .top {
+                border-bottom: 1px solid rgb(240, 240, 240); 
+            
+                @media (max-width: 768px) {
+                    border: none;
+                }
+            }
+
+            & .bottom {
+                margin-top: 1vw;
+            }
+        }
+    }
+
+}

@@ -1,0 +1,146 @@
+.BottomSection {
+    width: 100%;
+    display: flex;
+    background: #ffffff;
+    flex-direction: column;
+    font-family: 'Montserrat', sans-serif;
+
+    & .bottomreg {
+        display: flex;
+        flex-direction: column;
+        background: url('../TopSection/Header/bgr.jpg') no-repeat  0 center;
+        background-size: cover;
+
+        .content {
+            width: 65%;
+            margin: 3vw auto;
+            text-align: center;
+            color: #fff;
+
+            @media (max-width: 768px) {
+                width: 90%;
+            }
+
+            .title {
+                font-weight: 700;
+                font-size: 2.86vw;
+
+                @media (max-width: 1200px) {
+                    font-size: 3vw;
+                }
+        
+                @media (max-width: 768px) {
+                    font-size: 6.86vw;
+                    position: absolute;
+                    margin-top: 4vw;
+                    color: #000000;
+                    z-index: 100;
+                    margin-left: 4vw;
+                }
+            }
+
+            .subtitle {
+                font-weight: 700;
+                margin: 0 auto;
+                font-size: 1.72vw;
+                margin-bottom: 2vw;
+
+                @media (max-width: 1200px) {
+                    font-size: 2vw;
+                }
+        
+                @media (max-width: 768px) {
+                    width: 80%;
+                    font-size: 4.86vw;
+                    position: absolute;
+                    margin-top: 12vw;
+                    color: #000000;
+                    z-index: 100;
+                    margin-left: 6vw;
+                }
+            }
+
+            .regform {
+                width: 36%;
+                margin: 0 auto;
+
+                @media (max-width: 1200px) {
+                    width: 50%;
+                }
+
+                @media (max-width: 768px) {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    & .footer {
+        display: flex;
+        flex-direction: column;
+
+        .content {
+            width: 65%;
+            margin: 2vw auto;
+            text-align: center;
+            color: #adadad;
+            font-size: 0.62vw;
+
+            @media (max-width: 1200px) {
+                font-size: 1.2vw;
+            }
+
+            @media (max-width: 768px) {
+                width: 90%;
+                font-size: 3vw;
+            }
+
+            & .footerlogo {
+                display: flex;
+                height: 12vw;
+                margin: 0 auto;
+                margin-bottom: 2vw;
+
+                @media (max-width: 1200px) {
+                    height: 18vw;
+                }
+
+                @media (max-width: 768px) {
+                    height: 52vw;
+                }
+            }
+
+            & .copyright {
+                margin: 1vw 0;
+
+
+                @media (max-width: 768px) {
+                    margin: 4vw 0;
+                }
+            }
+
+            & .links {
+                a {
+                    color: #adadad;
+                    margin: 0 0.4vw;
+
+                    @media (max-width: 768px) {
+                        margin: 0 1vw;
+                    }
+                }
+            }
+
+            & .risk {
+                margin: 0.8vw auto;
+                text-align: left;
+                padding: 0 0.8vw;
+                border: 1px solid #dfdfdf;
+
+                @media (max-width: 768px) {
+                    margin: 2vw auto;
+                    padding: 0 3vw;
+                }
+            }
+        }
+    }
+}

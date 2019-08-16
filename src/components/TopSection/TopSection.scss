@@ -1,0 +1,255 @@
+@import './Header/Header.scss';
+@import './Regform/Regform.scss';
+
+.TopSection {
+    width: 100%;
+    display: flex;
+    background: #ffffff;
+    color: #fff;
+    flex-direction: column;
+    border-bottom: 1px solid rgb(240, 240, 240);
+
+    .top-reg {
+        width: 60%;
+        margin: 2vw auto;
+        display: flex;
+
+        @media (max-width: 1200px) {
+            width: 80%;
+        }
+
+        @media (max-width: 768px) {
+            width: 90%;
+            flex-direction: column;
+        }
+
+        .VideoPlayer {
+            height: auto;
+            width: 34vw;
+            display: inline-block;
+            background: #000000;
+
+            @media (max-width: 1200px) {
+                width: 44vw;
+            }
+    
+            @media (max-width: 768px) {
+                width: 100%;
+            }
+
+            & .info {
+                z-index: 10;
+                position: absolute;
+                width: inherit;
+                height: inherit;
+                background-color: rgba($color: #000000, $alpha: .5);
+            
+                @media (max-width: 768px) {
+                    width: 90%;
+                }
+
+                & .inner {
+                    position: relative;
+                    margin: 25.5% 0;
+
+                    @media (max-width: 1200px) {
+                        margin: 24.8% 0;
+                    }
+            
+                    @media (max-width: 768px) {
+                        margin: 16% 0;
+                    }
+
+                    & .text {
+                        font-weight: 700;
+                        font-size: 1.62vw;
+                        line-height: 1;
+                        text-align: center;
+                
+                        @media (max-width: 768px) {
+                            font-size: 4.62vw;
+                        }
+                    }
+
+                    & img {
+                        position: relative;
+                        width: 4vw;
+                        margin: 1vw 43.2%;
+                        transition: filter 0.3s ease;
+                        cursor: pointer;
+
+                        @media (max-width: 768px) {
+                            width: 14vw;
+                            margin: 4vw 41.2%;
+                        }
+
+                        &:hover {
+                            filter: brightness(75%);
+                        }
+                    }
+                }
+            }
+        }
+
+        .regform {
+            width: 40%;
+            display: inline-block;
+            height: inherit;
+            margin-left: 1.4vw;
+
+            @media (max-width: 768px) {
+                width: 100%;
+                margin-left: 0;  
+            }
+
+            & .reg-title {
+                position: absolute;
+                color: black;
+                top: calc(24.5vw);
+                right: calc(20.4%);
+                width: 24%;
+                text-align: center;
+                font-weight: 700;
+                font-size: 1.28vw;
+                line-height: 1;
+                font-family: 'Montserrat', sans-serif;
+
+                @media (max-width: 1200px) {
+                    top: calc(34.9vw);
+                    right: calc(6.4%);
+                    font-size: 1.58vw;
+                    width: 44%;
+                }
+        
+                @media (max-width: 768px) {
+                    top: calc(148vw);
+                    right: calc(9.4%);
+                    font-size: 4.58vw;
+                    width: 80%;
+                    z-index: 15;
+                }
+
+                & span {
+                    font-size: 1.36vw;
+                    color: #d65000;
+
+                    @media (max-width: 1200px) {
+                        font-size: 1.66vw;
+                    }
+            
+                    @media (max-width: 768px) {
+                        font-size: 5.58vw;
+                    }
+                }
+            }
+        }
+    }
+
+    & .badges {
+        width: 17%;
+        margin: 0 auto 2vw auto;
+        filter: grayscale(100%);
+
+        @media (max-width: 768px) {
+            width: 80%;
+            margin: 4vw auto 8vw auto;
+        }
+    }
+}
+
+.modalscreen {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: #00000080;
+    z-index: 20;
+    vertical-align: middle;
+
+    & .close {
+        width: 1.2vw;
+        height: 1.2vw;
+        float: right;
+        display: block;
+        background: #d65000; 
+        border-radius: 50%;
+        font-size: 0.96vw;
+        cursor: pointer;
+        margin-left: auto;
+        filter: brightness(50%);
+
+        @media (max-width: 768px) {
+            width: 6.2vw;
+            height: 6.2vw;
+            font-size: 8vw;
+            line-height: 0.77;
+        }
+
+        &:hover {
+            filter: brightness(100%);
+        }
+    }
+
+    & .modal {
+        font-family: 'Montserrat', sans-serif;
+        text-align: center;
+        color: #fff;
+        display: block;
+        padding: 1.4vw;
+        width: 28%;
+        height: auto;
+        margin: auto;
+        background: url('./Header/bgr.jpg') no-repeat center center;
+        background-size: cover;
+
+        @media (max-width: 1200px) {
+            width: 38%;
+        }
+
+        @media (max-width: 768px) {
+            padding: 3.4vw;
+            width: 90%;
+        }
+
+        & .title {
+            margin-top: 2vw;
+            font-weight: 700;
+            color: #d65000;
+            font-size: 3.6vw;
+
+            @media (max-width: 1200px) {
+                margin-top: 4vw;
+                font-size: 5.6vw;
+            }
+    
+            @media (max-width: 768px) {
+                margin-top: 8vw;
+                font-size: 12.6vw;
+            }
+        }
+
+        & .subtitle {
+            font-size: 1.72vw;
+            margin-bottom: 1vw;
+
+            @media (max-width: 1200px) {
+                font-size: 5.6vw;
+            }
+    
+            @media (max-width: 768px) {
+                font-size: 7.6vw;
+            }
+        }
+
+        & p {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.08vw;
+
+            @media (max-width: 768px) {
+                font-size: 3.6vw;
+                width: 90%;
+                margin: 3vw auto;
+            }
+        }
+    }
+}
