@@ -1,0 +1,43 @@
+.Page {
+    font-family: 'Montserrat', sans-serif;
+    width: 668px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    font-size: .8em;
+    line-height: 1.75;
+    text-align: justify;
+
+    @media (max-width: 768px) {
+        width: 90%;
+    }
+
+    & .title {
+        font-size: 2.75em;
+        line-height: 1.25;
+        margin-top: 1em;
+        color: #d65000;
+        font-weight: 700;
+        text-align: left;
+        margin: 1vw 0;
+    }
+
+    & .section_title {
+        line-height: 1.25;
+        text-align: left;
+        font-size: 1.75em;
+        font-weight: 700;
+        margin: 1vw 0;
+    }
+
+    & .bold {
+        font-size: 1.25em;
+        font-weight: 600;
+    }
+
+    & .copyright {
+        border-top: 1px solid lightgrey;
+        font-size: .8em;
+        padding: 0.4vw 0;
+    }
+}

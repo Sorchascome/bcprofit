@@ -1,187 +1,166 @@
 import React, { Component } from 'react'
+import {Link} from 'react-router-dom'
 
-import * as validateInput from '../../../helpers/validateInput'
 import IntlTelInput from 'react-intl-tel-input'
 import 'react-intl-tel-input/dist/main.css'
-
-import * as errorMessage from '../../../helpers/errorMessage'
 
 import { ReactComponent as Check } from './check.svg'
 import { ReactComponent as Mark } from './excl.svg'
 import lock from './lock.svg'
+import logo from '../../BottomSection/bcprofitmin.svg'
+
 
 export default class Regform extends Component {
     constructor(props) {
         super(props)
 
-        this.handleBackwards = this.handleBackwards.bind(this);
-        this.handleSync = this.handleSync.bind(this);
+        this.inputs = ['first_name', 'last_name', 'email']
+        this.tooltips = {}
+
+        this.passtest = {
+            invalidlength: this.props.languageManager().passtest[0],
+            nospecial: this.props.languageManager().passtest[1],
+            nolowercase: this.props.languageManager().passtest[2],
+            nouppercase: this.props.languageManager().passtest[3],
+            nonumber: this.props.languageManager().passtest[4]
+        }
     }
 
-    handleForward(e) {
-        let form = e.target.parentElement;
-        let forward = [false, false, false, false];
-        let values = [];
+    updateValue(value, key, callback) {
+        let obj = {},
+        tempForm = this.props.syncState.form
+        obj[key] = value
+        Object.assign(tempForm, obj)
+
+        new Promise((resolve, reject) => resolve(this.props.syncForms(tempForm))).then(callback)
+    }
+
+    handleForward() {
+        let validate = this.props.validateParams(this.props.syncState.form)
         
-        // Step 1
-        if (form.classList.contains('one')) {
-
-            if(!form.querySelector('.accept').checked) {
-                errorMessage.errorMessage(form.querySelector('.required'), 'Please accept this if you want to proceed');
-            } else {
-                forward[3] = true;
-            }
-
-            let inputs = [...form.querySelectorAll('.inputfield')];
-            inputs.map((input, index) => {
-                if(input.value.length === 0) {
-                    errorMessage.errorMessage(input, 'Please fill this field');
-                } else if ((index === 0 || index === 1) && !validateInput.checkOnlyLetters(input.value)) {
-                    errorMessage.errorMessage(input, 'Use letters only');
-                } else if ((index === 2) && !validateInput.validateEmail(input.value)) {
-                    errorMessage.errorMessage(input, 'Invalid email format');
-                } else {
-                    forward[index] = true;
-                    values.push(input);
-                }
-            })
-
-            if (forward[0] && forward[1] && forward[2] && forward[3]) {
-                this.props.handleForward(values[0], values[1], values[2]);
-                this.props.handleStep(this.props.step + 1);
-            }
-        }
-
-        // Step 2
-        if (form.classList.contains('two')) {
-
-            let reqs = [...form.querySelectorAll('li')];
-
-            if(reqs.every(req => req.classList.contains('ok'))){
-                values.push(form.querySelector('.pass').value);
-                this.props.handleStep(this.props.step + 1);
-            }
-        }
-
-
-        // Step 3
-        if (form.classList.contains('three')) {
-
-            let tel = form.querySelector('.tel');
-            let intel = form.querySelector('.intl-tel-input');
-
-            if(tel.value.length === 0) {
-                errorMessage.errorMessage(intel, 'Please fill this field');
-            } else if(!validateInput.checkOnlyNumbers(tel.value)) {
-                errorMessage.errorMessage(intel, 'Use numbers only');
-            } else {
-                this.props.handleSubmit(values[0], values[1], values[2], values[3], tel.value);
-            }
-        }
+        if (validate.success) this.props.setLeadData(this.props.syncState.form)
+            .then(this.props.handleStep(this.props.syncState.step + 1))
+            .then(this.props.syncErrors({password: {empty: true}}))
+            .then(() => { if (this.props.syncState.step === 2) this.props.handleLeadStep() })
+        else this.props.syncErrors(validate.errors)
     }
 
-    handleBackwards(e) {
-        let back = parseInt(e.target.getAttribute('index'));
-        let forms = [...document.querySelectorAll('.Regform')];
+    handleSubmit() {
+        this.props.handleStep(this.props.syncState.step + 1)
 
-        forms.map(form => {
-            let steps = [...form.querySelectorAll('.form-wrapper')];
-            steps.map((step, index) => {
-                for (let i=0;i<=back;i++) {
-                    step.classList.remove('step');
-                }
-            })
-        })
-
-        this.props.handleStep(parseInt(e.target.getAttribute('index')));
+        this.props.setLeadData(this.props.syncState.form)
+            .then(this.props.handleSubmit)
+            .then(res => {if (!res.success) this.props.handleStep(1)})
     }
 
-    handleSync(e) {
-        let input = e.target.value;
-        let inputClass = e.target.className;
-        let forms = [...document.querySelectorAll('.Regform')];
-
-        forms.map(form => {
-            form.getElementsByClassName(inputClass)[0].value = input;
-        })
+    toggleTooltip(input) {
+        if (this.tooltips[input]) this.tooltips[input].style.opacity = 0
     }
 
-    componentDidUpdate() {
-        let forms = [...document.querySelectorAll('.Regform')];
-
-        forms.map(form => {
-            let steps = [...form.querySelectorAll('.form-wrapper')];
-            steps.map((step, index) => {
-                if (index+1 === this.props.step-1) {
-                    step.classList.add('step');
-                }
-            })
-        })
+    checkPass(pass) {
+        let valid = this.props.validateInput({password: pass})
+        this.props.syncErrors(valid)
     }
 
-    componentDidMount() {
-        let inputs = [...document.querySelectorAll('.inputfield')];
-
-        inputs.map(input => {
-            input.addEventListener('change', this.handleSync);
-        })
+    componentDidUpdate(prevProps) {
+        if (prevProps.syncState.errors !== this.props.syncState.errors)
+        Object.keys(this.tooltips).map(input => { if (this.tooltips[input]) this.tooltips[input].style.opacity = 1 })
     }
 
     render() {
-        return (
-            <div className={"Regform " + (this.props.class ? this.props.class : '')}>
-                <div className="steps">
-                    {[1,2,3].map(index => {
-                        if(index <= this.props.step-1) {
-                            return (
-                                <div className="num check" key={index} index={index} onClick={this.handleBackwards}><Check className="checksvg"/></div>
-                            )
-                        } else {
-                            return (
-                                <div className="num" key={index}>{index}</div>
-                            )
-                        }
-                    })}
-                </div>
-                <div className='inner'>
-                    <div className='form-wrapper one'>
-                        <input className="inputfield fname" type="text" name="fname" placeholder="Fornavn"/>
-                        <input className="inputfield lname" type="text" name="lname" placeholder="Efternavn"/>
-                        <input className="inputfield email" type="text" name="email" placeholder="Email" autoComplete='off'/>
-                        <div className='agreement'>
-                            <input type="checkbox" name="agree_one" />
-                            <span>Jeg giver mit samtykke til at min e-mailadresse lagres med det formål, at jeg kan modtage information og kommercielle tilbud om tradingsoftware og -platforme.</span>
+        let version = this.props.languageManager()
+
+        if (this.props.syncState.step <= 3) {
+            return (
+                <div className={"Regform " + (this.props.class ? this.props.class : '')} ref={this.setTextInputRef}>
+                    <div className="steps">
+                        {[1,2,3].map(index => {
+                            if(index <= this.props.syncState.step-1) {
+                                return (
+                                    <div className="num check" key={index} index={index} onClick={() => this.props.handleStep(index)}><Check className="checksvg"/></div>
+                                )
+                            } else {
+                                return (
+                                    <div className="num" key={index}>{index}</div>
+                                )
+                            }
+                        })}
+                    </div>
+                    <div className='inner'>
+                        <div className={'form-wrapper one' + ((this.props.syncState.step > 1) ? ' step' : '')}>
+                            
+                            {this.inputs.map(input => 
+                                <div key={input}>
+                                    <input 
+                                        className={'inputfield ' + input}
+                                        onChange={e => this.updateValue(e.target.value, input)}
+                                        onFocus={() => this.toggleTooltip(input)}
+                                        type="text" name={input} 
+                                        placeholder={version[input]} 
+                                        value={this.props.syncState.form[input]}/>
+
+                                    {((this.props.syncState.errors[input] && this.props.syncState.errors[input].messages)) ? 
+                                    <div 
+                                        ref={ref => this.tooltips[input] = ref} 
+                                        style={{opacity: (this.props.syncState.errors[input]) ? 1 : 0}} 
+                                        className="error">
+                                            <Mark className='excl'/>
+                                            <span>{this.props.syncState.errors[input].messages[0]}</span>
+                                    </div> : ''}
+                                </div>)}
+
+                            <div className='agreement'>
+                                <input type="checkbox" name="agree_one" />
+                                <span>{version.req1[0]} </span>
+                            </div>
+                            <div className='agreement required'>
+                                <input type="checkbox" className='accept' name="agree_2" onChange={e => {this.toggleTooltip(e.target.name); this.updateValue(e.target.checked, e.target.name)}} />
+                                <span>{version.req2[0]} <Link to='/terms'>{version.req2[1]}</Link>{version.req2[2]}<Link to='/privacy'>{version.req2[3]}</Link>{version.req2[4]}</span>
+                                {((this.props.syncState.errors['agree_2'] && this.props.syncState.errors['agree_2'].messages)) ? 
+                                    <div 
+                                    ref={ref => this.tooltips['agree_2'] = ref} 
+                                    style={{opacity: (this.props.syncState.errors['agree_2']) ? 1 : 0}} 
+                                    className="error agree">
+                                        <Mark className='excl'/>
+                                        <span>{(this.props.syncState.errors['agree_2'] && this.props.syncState.errors['agree_2'].messages) ? this.props.syncState.errors['agree_2'].messages[0] : ''}</span>
+                                </div> : ''}
+                            </div>
+                            <button className='start' onClick={this.handleForward.bind(this)}>{version.button}</button>
+                            <div className="bottominfo"><img src={lock} alt="lock"/>{version.bottominfo}<div className="more" onMouseOver={() => this.infoBox.style.opacity = "1"} onMouseOut={() => this.infoBox.style.opacity = "0"} >{version.more}</div><div className="morebox" ref={ref => this.infoBox = ref}>{version.morebox}</div></div>
                         </div>
-                        <div className='agreement required'>
-                            <input type="checkbox" className='accept' name="agree_two" />
-                            <span>Jeg erklærer mig enig i disse <a href="">Vilkår og Betingelser</a> og denne <a href="">Privatlivspolitik</a></span>
+                        <div className={'form-wrapper two' + ((this.props.syncState.step > 2) ? ' step' : '')}>
+                            <input className="inputfield password" type="password" maxLength="8" onChange={e => this.updateValue(e.target.value, e.target.name, this.checkPass(e.target.value))} name="password" placeholder={version.password}/>
+                            <ul className='req'>
+                                {Object.keys(this.passtest).map(key => {
+                                    return (<li className={(this.props.syncState.errors.password && (this.props.syncState.errors.password[key] || this.props.syncState.errors.password.empty)) ? '' : 'f'} key={key}>{this.passtest[key]}</li>)
+                                })}
+                            </ul>
+                            <button className='start' onClick={this.handleForward.bind(this)}>{version.button}</button>
                         </div>
-                        <button onClick={this.handleForward.bind(this)} className='start'>Næste</button>
-                        <div className="bottominfo"><img src={lock} alt="lock"/> Du kan skifte mening til enhver tid ved at klikke på afmeldelseslinket i...</div>
+                        <div className='form-wrapper three'>
+                            <IntlTelInput
+                                preferredCountries={[this.props.countryCode]}
+                                containerClassName="intl-tel-input"
+                                inputClassName="inputfield tel"
+                                autoPlaceholder={true}
+                                separateDialCode={true}
+                                value={this.props.syncState.form.phone_number}
+                                onPhoneNumberChange={(a, value, b) => {value = value.replace(/\D/g,''); this.updateValue(value, 'phone_number')}}
+                                />
+                            <button className='start' onClick={this.handleSubmit.bind(this)}>{version.button_last}</button>
+                        </div>
                     </div>
-                    <div className='form-wrapper two'>
-                        <input className="inputfield pass" type="password" maxLength="12" onChange={validateInput.checkInput} name="password" placeholder="Kodeord"/>
-                        <ul className='req'>
-                            <li>Kodeordet skal være på 8-12 tegn.</li>
-                            <li>Må ikke indeholde specielle tegn.</li>
-                            <li>Skal indeholde mindst 1 bogstav.</li>
-                            <li>Skal indeholde mindst 1 stort bogstav.</li>
-                            <li>Skal indeholde mindst 1 tal.</li>
-                        </ul>
-                        <button onClick={this.handleForward.bind(this)} className='start'>Næste</button>
-                    </div>
-                    <div className='form-wrapper three'>
-                        <IntlTelInput
-                            containerClassName="intl-tel-input"
-                            inputClassName="inputfield tel"
-                            autoPlaceholder={true}
-                            separateDialCode={true}
-                            />
-                        <button onClick={this.handleForward.bind(this)} className='start' >Kom i gang nu</button>
-                    </div>
+
                 </div>
-                <div className="error"><Mark className='excl'/><span></span></div>
-            </div>
-        )
+            )
+        } else {
+            return (
+                <div className={"Regform " + (this.props.class ? this.props.class : '')} ref={this.setTextInputRef}>
+                    <img src={logo} alt="lodaing" className="loading"/>
+                </div>
+            )
+        }
     }
 }
+
+

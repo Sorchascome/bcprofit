@@ -24,9 +24,8 @@
         }
 
         .VideoPlayer {
-            height: auto;
             width: 34vw;
-            display: inline-block;
+            display: inline-flex;
             background: #000000;
 
             @media (max-width: 1200px) {
@@ -41,7 +40,6 @@
                 z-index: 10;
                 position: absolute;
                 width: inherit;
-                height: inherit;
                 background-color: rgba($color: #000000, $alpha: .5);
             
                 @media (max-width: 768px) {
@@ -49,16 +47,11 @@
                 }
 
                 & .inner {
-                    position: relative;
-                    margin: 25.5% 0;
-
-                    @media (max-width: 1200px) {
-                        margin: 24.8% 0;
-                    }
-            
-                    @media (max-width: 768px) {
-                        margin: 16% 0;
-                    }
+                    display: flex;
+                    flex-direction: column;
+                    height: inherit;
+                    justify-content: center;
+                    margin: auto;
 
                     & .text {
                         font-weight: 700;
@@ -72,9 +65,9 @@
                     }
 
                     & img {
-                        position: relative;
+                        display: block;
                         width: 4vw;
-                        margin: 1vw 43.2%;
+                        margin: 1vw auto;
                         transition: filter 0.3s ease;
                         cursor: pointer;
 
@@ -96,6 +89,7 @@
             display: inline-block;
             height: inherit;
             margin-left: 1.4vw;
+            position: relative;
 
             @media (max-width: 768px) {
                 width: 100%;
@@ -103,11 +97,12 @@
             }
 
             & .reg-title {
+                text-transform: none;
                 position: absolute;
                 color: black;
-                top: calc(24.5vw);
-                right: calc(20.4%);
-                width: 24%;
+                bottom: 102%;
+                right: 0;
+                width: 100%;
                 text-align: center;
                 font-weight: 700;
                 font-size: 1.28vw;
@@ -115,21 +110,17 @@
                 font-family: 'Montserrat', sans-serif;
 
                 @media (max-width: 1200px) {
-                    top: calc(34.9vw);
-                    right: calc(6.4%);
                     font-size: 1.58vw;
-                    width: 44%;
                 }
         
                 @media (max-width: 768px) {
-                    top: calc(148vw);
-                    right: calc(9.4%);
+                    bottom: 84%;
                     font-size: 4.58vw;
-                    width: 80%;
                     z-index: 15;
                 }
 
                 & span {
+                    text-transform: uppercase;
                     font-size: 1.36vw;
                     color: #d65000;
 
@@ -158,7 +149,6 @@
 }
 
 .modalscreen {
-    display: none;
     position: fixed;
     width: 100%;
     height: 100%;
@@ -233,7 +223,7 @@
             margin-bottom: 1vw;
 
             @media (max-width: 1200px) {
-                font-size: 5.6vw;
+                font-size: 3.6vw;
             }
     
             @media (max-width: 768px) {
@@ -243,7 +233,7 @@
 
         & p {
             font-family: 'Open Sans', sans-serif;
-            font-size: 1.08vw;
+            font-size: 22px;
 
             @media (max-width: 768px) {
                 font-size: 3.6vw;

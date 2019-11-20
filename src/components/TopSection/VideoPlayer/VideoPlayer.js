@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import ReactPlayer from 'react-player'
 
 import btn from './play_btn.png'
@@ -8,21 +9,45 @@ export default class VideoPlayer extends Component {
     super(props)
   
     this.state = {
-       play: false
+      play: false,
+      height: 0
     }
+
+    this.updateHeight = this.updateHeight.bind(this)
   }
 
-  handlePlay(e) {
-    e.target.parentElement.parentElement.style.display = 'none';
+  handlePlay() {
+    if (window.sbidTracking) {
+        window.sbidTracking.settings.params.video_play = "1";
+    }
     this.setState({play: true});
   }
 
+  componentDidMount() {
+    this.updateHeight()
+    window.addEventListener('resize', this.updateHeight)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.step !== this.props.step) this.updateHeight()
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateHeight)
+  }
+
+  updateHeight() {
+    this.setState({height: ReactDOM.findDOMNode(this).offsetHeight})
+  }
+
   render () {
+    let version = this.props.version;
+
     return (
-      <div className="VideoPlayer">
-        <div className="info">
+      <div className="VideoPlayer" ref={this.player}>
+        <div className="info" style={{display: (this.state.play) ? 'none' : 'block', height: this.state.height}}>
           <div className="inner">
-            <div className="text">Klik for at se og lær hemmeligheden!</div>
+            <div className="text">{version.video}</div>
             <img src={btn} alt="play" onClick={this.handlePlay.bind(this)}/>
           </div>
         </div>

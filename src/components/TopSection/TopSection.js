@@ -8,39 +8,53 @@ import video from './btcvid.mp4'
 import badges from './badges.png'
 
 export default class TopSection extends Component {
-    handleClose(e) {
-        e.target.parentElement.parentElement.style.display = 'none';
+    constructor(props) {
+        super(props)
+
+        this.state = {showmodal: false}
+    }
+    
+    handleScroll() {
+        let panel = this.regPanel;
+
+        window.scrollTo({
+            top: panel.offsetTop,
+            left: 0,
+            behavior: 'smooth'
+        })
+
+    }
+
+    handleClose() {
+        this.setState({showmodal: false})
     }
 
     componentDidMount() {
-
-
-        setTimeout(() => {
-            document.querySelector('.modalscreen').style.display = 'flex';
-        }, 
-        2000);
+        setTimeout(() => this.setState({showmodal: true}), 2500)
     }
 
     render() {
+        let version = this.props.languageManager();
+
         return (
             <div className='TopSection'>
-                <Header />
+                <Header version={version} handleScroll={this.handleScroll.bind(this)}/>
                 <div className="top-reg">
-                    <VideoPlayer link={video} />
-                    <div className="regform">
-                        <div className="reg-title"><span>REGISTRER DIG NEDENFOR</span><br/>så fører vi dig gennem processen.</div>
-                        <Regform handleStep={this.props.handleStep} handleForward={this.props.handleForward} handleSubmit={this.props.handleSubmit} step={this.props.step}/>
+                    <VideoPlayer link={video} version={version} step={this.props.syncState.step}/>
+                    <div className="regform" ref={ref => this.regPanel = ref}>
+                        <div className="reg-title"><span>{version.topreg1}</span><br/>{version.topreg2}<br/>{version.topreg3}</div>
+                        <Regform {...this.props}/>
                     </div>
                 </div>
                 <img src={badges} alt="badges" className="badges"/>
-                <div className="modalscreen">
+                <div className="modalscreen" style={{display: (this.state.showmodal) ? 'flex' : 'none'}}>
                     <div className="modal">
-                        <div className="close" onClick={this.handleClose}>×</div>
-                        <div className="title">Vent!</div>
-                        <div className="subtitle">Før du går…</div>
-                        <p>Markederne bevæger sig hurtigt. Gå ikke glip af din chance for at drage fordel af de seneste stigninger og fald.</p>
-                        <p>Tilmeld dig i dag og slut dig til de tusindvis af mennesker, der ændrer deres liv takket være online handel.</p>
-                        <Regform handleStep={this.props.handleStep} handleForward={this.props.handleForward} handleSubmit={this.props.handleSubmit} class={'inmodal'} step={this.props.step}/>
+                        <div className="close" onClick={this.handleClose.bind(this)}>×</div>
+                        <div className="title">{version.modal_title}</div>
+                        <div className="subtitle">{version.modal_sub}</div>
+                        <p>{version.modal_text1}</p>
+                        <p>{version.modal_text2}</p>
+                        <Regform {...this.props} class={'inmodal'}/>
                     </div>
                 </div>
             </div>

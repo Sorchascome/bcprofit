@@ -4,12 +4,16 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "node-sass": "^4.13.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-intl-tel-input": "^7.0.1",
     "react-player": "^1.11.2",
     "react-query-params": "^1.0.9",
-    "react-scripts": "3.1.0"
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "3.1.0",
+    "sb-lp-framework": "^1.0.47"
   },
   "scripts": {
     "start": "react-scripts start",

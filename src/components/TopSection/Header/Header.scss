@@ -4,7 +4,12 @@
     background: url('./bgr.jpg') no-repeat center center;
     background-size: cover;
     flex-direction: column;
+    min-height: 25.6vw;
     clip-path: polygon(50% 0%, 100% 0, 100% 68%, 37% 100%, 0 94%, 0 0);
+
+    @media (max-width: 1200px) {
+        min-height: 36.6vw;
+    }
 
     @media (max-width: 768px) {
         clip-path: polygon(50% 0%, 100% 0, 100% 90%, 50% 100%, 0 90%, 0 0);
@@ -41,6 +46,7 @@
 
         & img {
             height: 3.82vw;
+            margin-right: auto;
 
             @media (max-width: 1200px) {
                 height: 5.82vw;
@@ -74,7 +80,7 @@
             font-weight: 400;
             font-size: 1.52vw;
             line-height: 1.2;
-            width: 35%;
+            width: 52%;
             margin: 1vw 0 2vw 0;
 
             @media (max-width: 1200px) {
@@ -89,11 +95,16 @@
             }
 
             & span {
+                cursor: pointer;
                 font-weight: 700;
                 text-decoration: underline;
                 background: #d65000;
                 padding: 0.1vw 0.2vw;
                 border-radius: 0.2vw;
+
+                &:hover {
+                    text-decoration: none; 
+                }
             }
         }
     }

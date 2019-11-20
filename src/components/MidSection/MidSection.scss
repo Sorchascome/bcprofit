@@ -39,7 +39,7 @@
             }
 
             .subtitle {
-                width: 40%;
+                width: 42%;
                 margin: 1.62vw auto;
                 font-weight: 400;
                 font-size: 1.4vw;
@@ -193,7 +193,7 @@
                             font-weight: 400;
                             font-size: 0.82vw;
                             height: 3.4vw;
-                            text-align: justify;
+                            text-align: left;
 
                             @media (max-width: 1200px) {
                                 font-size: 1.2vw;
@@ -277,8 +277,9 @@
                         & .text {
                             font-style: italic;
                             font-size: 1.04vw;
-                            padding-left: 0.8vw;
-                            font-family: 'Open Sans', sans-serif; 
+                            padding-left: 1vw;
+                            font-family: 'Open Sans', sans-serif;
+                            width: 84%;
                         
                             @media (max-width: 1200px) {
                                 font-size: 1.24vw;
