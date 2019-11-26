@@ -12,11 +12,11 @@ export default class Page extends Component {
         return (
             <div className='Page'>
                 <div className="title">{page.title}</div>
-                {page.toptext.map((text, index) => {
-                    return (<p key={index}>{text}</p>)
-                })}
-                    {page.sections.map((section, index) => {
-                    return (
+                {page.toptext.map((text, index) => 
+                    <p key={index}>{text}</p>
+                )}
+                    {page.sections.map((section, index) => 
+                    (
                         <div key={index}>
                             <div className="section_title">{section.title}</div>
                             {section.text.map((text, index) => {
@@ -24,8 +24,8 @@ export default class Page extends Component {
                             })}
                         </div>
                     )
-                })}
-                <div className="copyright">Copyright © 2019 | All Rights Reserved</div>
+                )}
+                <div className="copyright">Copyright © {(new Date).getFullYear()} | All Rights Reserved</div>
             </div>
         )
     }

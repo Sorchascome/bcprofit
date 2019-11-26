@@ -15,16 +15,14 @@ export default class Regform extends Component {
         super(props)
 
         this.inputs = ['first_name', 'last_name', 'email']
-        this.tooltips = {}
 
-        this.passtest = {
-            invalidlength: this.props.languageManager().passtest[0],
-            nospecial: this.props.languageManager().passtest[1],
-            nolowercase: this.props.languageManager().passtest[2],
-            nouppercase: this.props.languageManager().passtest[3],
-            nonumber: this.props.languageManager().passtest[4]
-        }
+        this.tooltips = {};
+        this.passtest =  {};
+
+        ['invalidlength', 'nospecial', 'nolowercase', 'nouppercase', 'nonumber'].map((err, index) => this.passtest[err] = this.props.languageManager().passtest[index])
+
     }
+
 
     updateValue(value, key, callback) {
         let obj = {},
@@ -40,8 +38,8 @@ export default class Regform extends Component {
         
         if (validate.success) this.props.setLeadData(this.props.syncState.form)
             .then(this.props.handleStep(this.props.syncState.step + 1))
-            .then(this.props.syncErrors({password: {empty: true}}))
             .then(() => { if (this.props.syncState.step === 2) this.props.handleLeadStep() })
+            .then(() => this.props.syncErrors({password: {empty: true}}))
         else this.props.syncErrors(validate.errors)
     }
 
@@ -50,7 +48,8 @@ export default class Regform extends Component {
 
         this.props.setLeadData(this.props.syncState.form)
             .then(this.props.handleSubmit)
-            .then(res => {if (!res.success) this.props.handleStep(1)})
+            .then(res => (res.redirectUrl) ? window.location = res.redirectUrl : this.props.syncErrors({responseError: res.error}))
+            .then(this.props.handleStep(5))
     }
 
     toggleTooltip(input) {
@@ -114,7 +113,7 @@ export default class Regform extends Component {
                                 <span>{version.req1[0]} </span>
                             </div>
                             <div className='agreement required'>
-                                <input type="checkbox" className='accept' name="agree_2" onChange={e => {this.toggleTooltip(e.target.name); this.updateValue(e.target.checked, e.target.name)}} />
+                                <input type="checkbox" className='accept' checked={this.props.syncState.form.agree_2} name="agree_2" onChange={e => {this.toggleTooltip(e.target.name); this.updateValue(e.target.checked, e.target.name)}} />
                                 <span>{version.req2[0]} <Link to='/terms'>{version.req2[1]}</Link>{version.req2[2]}<Link to='/privacy'>{version.req2[3]}</Link>{version.req2[4]}</span>
                                 {((this.props.syncState.errors['agree_2'] && this.props.syncState.errors['agree_2'].messages)) ? 
                                     <div 
@@ -156,7 +155,18 @@ export default class Regform extends Component {
         } else {
             return (
                 <div className={"Regform " + (this.props.class ? this.props.class : '')} ref={this.setTextInputRef}>
-                    <img src={logo} alt="lodaing" className="loading"/>
+                    <div className="inner">
+                        {(this.props.syncState.step === 4) ? <img src={logo} alt="lodaing" className="loading"/> : 
+                        
+                            <div className={'form-wrapper'}>
+                    
+                            <span className="response_error">{this.props.syncState.errors.responseError}</span>
+                            <button className='start' onClick={() => this.props.handleStep(1)}>OK</button>
+                        
+                        </div>
+
+                        }
+                    </div>
                 </div>
             )
         }

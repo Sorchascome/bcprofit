@@ -23,7 +23,7 @@ export default class BottomSection extends Component {
                 <div className="footer">
                     <div className="content">
                         <img src={logo} alt="logo" className="footerlogo"/>
-                        <div className="copyright">Copyright 2019 The Bitcoin Profit</div>
+                        <div className="copyright">Copyright {(new Date).getFullYear()} The Bitcoin Profit</div>
                         <div className="links">
                             <Link to='/gov'>Government Disclaimer</Link>
                             <Link to='/privacy'>Privacy Policy</Link>
