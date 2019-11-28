@@ -48,7 +48,8 @@ export default class Regform extends Component {
 
         this.props.setLeadData(this.props.syncState.form)
             .then(this.props.handleSubmit)
-            .then(res => {console.log(res); if (res.redirectUrl) {window.location = res.redirectUrl} else {this.props.syncErrors({responseError: res.error}); this.props.handleStep(5)}})
+            .then(res => (res.redirectUrl) ? window.location = res.redirectUrl : this.props.syncErrors({responseError: res.error}))
+            .then(this.props.handleStep(5))
     }
 
     toggleTooltip(input) {
